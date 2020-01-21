@@ -24,6 +24,7 @@ public class RCTSplashScreen {
 
     private static Dialog dialog;
     private static ImageView imageView;
+    private static String resourceName;
 
     private static WeakReference<Activity> wr_activity;
 
@@ -31,7 +32,8 @@ public class RCTSplashScreen {
         return wr_activity.get();
     }
 
-    public static void openSplashScreen(Activity activity) {
+    public static void openSplashScreen(Activity activity, String resourceName) {
+        RCTSplashScreen.resourceName = resourceName;
         openSplashScreen(activity, false);
     }
 
@@ -135,9 +137,10 @@ public class RCTSplashScreen {
     }
 
     private static int getImageId() {
-        int drawableId = getActivity().getResources().getIdentifier("splash", "drawable", getActivity().getClass().getPackage().getName());
+        String drawableName = resourceName == null ? "splash" : resourceName;
+        int drawableId = getActivity().getResources().getIdentifier(drawableName, "drawable", getActivity().getClass().getPackage().getName());
         if (drawableId == 0) {
-            drawableId = getActivity().getResources().getIdentifier("splash", "drawable", getActivity().getPackageName());
+            drawableId = getActivity().getResources().getIdentifier(drawableName, "drawable", getActivity().getPackageName());
         }
         return drawableId;
     }
